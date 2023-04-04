@@ -5,7 +5,7 @@ With this HTML file, you can easily detect the hex code of any color in photos, 
 
 <h2>Features:</h2>
 <ul>
-    <li>-This tool is compatible with Chrome Desktop.</li>
-    <li>-You can easily copy the Hex code by simply clicking on it.</li>
-    <li>-You can also use the color detector outside of the browser.</li>
+    <li>This tool is compatible with Chrome Desktop.</li>
+    <li>You can easily copy the Hex code by simply clicking on it.</li>
+    <li>You can also use the color detector outside of the browser.</li>
 </ul>
