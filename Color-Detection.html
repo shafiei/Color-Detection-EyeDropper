@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Detection (EyeDropper)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .page-background {
+            background: #7918f2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            position: relative;
+        }
+
+        #start-button {
+            font-size: 24px;
+            padding: 16px;
+            background-color: #fff;
+            color: #7918f2;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            outline: none;
+            margin-bottom: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        #start-button:hover {
+            background-color: #f2e81f;
+            color: #000;
+        }
+
+        #result {
+            font-size: 18px;
+            color: #fff;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #hex-code {
+            cursor: pointer;
+            display: none;
+            margin-top: 20px;
+            color: #fff;
+            text-align: center;
+        }
+
+        .canvas {
+            border: 2px solid white;
+            margin-top: 20px;
+            max-width: 100%;
+            height: auto;
+        }
+
+        #copyright {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 15px;
+            text-align: center;
+        }
+
+        a {
+            text-decoration: none;
+            color: white;
+        }
+
+        p {
+            margin-top: 0;
+            color: white;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body class="page-background">
+    <button id="start-button">Detect Color</button>
+    <div id="hex-code">Hex code is: <span id="result"></span></div>
+    <canvas id="canvas" width="200" height="200"></canvas>
+    <br>
+    <p>This tool is only compatible with Chrome Desktop.<br>
+        You can easily copy the Hex code by simply clicking on it.<br>
+        You can also use the color detector outside of the browser.
+    </p>
+    <div id="copyright">Created by <a href="https://shafiei.dev">Shafiei</a></div>
+    <script>
+      document.getElementById("start-button").addEventListener("click", () => {
+        const resultElement = document.getElementById("result");
+        const hexCodeElement = document.getElementById("hex-code");
+    
+        if (!window.EyeDropper) {
+          resultElement.textContent = "Your browser does not support the EyeDropper API";
+          return;
+        }
+    
+        const eyeDropper = new EyeDropper();
+    
+        eyeDropper
+          .open()
+          .then((result) => {
+            resultElement.textContent = result.sRGBHex;
+            hexCodeElement.style.display = "block";
+    
+            const canvas = document.getElementById("canvas");
+            const context = canvas.getContext("2d");
+    
+            // Draw a shape with the color obtained from EyeDropper
+            context.fillStyle = result.sRGBHex;
+            context.fillRect(0, 0, canvas.width, canvas.height);
+    
+            // Add a 2px white border
+            context.strokeStyle = "white";
+            context.lineWidth = 7;
+            context.strokeRect(0, 0, canvas.width, canvas.height);
+    
+            // Add event listener to hex code element
+            resultElement.addEventListener("click", () => {
+              // Create a temporary textarea element
+              const tempTextarea = document.createElement("textarea");
+              tempTextarea.value = resultElement.textContent;
+              document.body.appendChild(tempTextarea);
+              tempTextarea.select();
+              document.execCommand("copy");
+              document.body.removeChild(tempTextarea);
+              alert("Hex code copied to clipboard: " + resultElement.textContent);
+            });
+          })
+          .catch((e) => {
+            resultElement.textContent = e;
+          });
+      });
+    </script>    
+</body>
+</html>
