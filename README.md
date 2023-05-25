@@ -11,4 +11,4 @@ With this HTML file, you can easily detect the hex code of any color in photos, 
 </ul>
 
 <h3>try it Online <a href="https://shafiei.dev/eyedropper">Here</a></h3>
-<h3>See how it works on <a href="https://youtu.be/lFJCcO1e-50">YouTube</a></h3>
+<h3>check how it works on <a href="https://youtu.be/lFJCcO1e-50">YouTube</a></h3>
